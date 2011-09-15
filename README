@@ -1,0 +1,8 @@
+安装方法:
+运行
+    ./install.sh -g git_base_address
+
+git_base_address 为需要应用lint工具的数据仓库的基地址
+
+eg:
+    ./install.sh -g /home/zhouliang.zl/dev/apiproxy

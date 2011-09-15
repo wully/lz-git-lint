@@ -31,7 +31,7 @@ abstract class Lint {
 
 
     abstract function check_row($rs,$pre_rs,$post_rs);
-    abstract function check_contents($path);
+    abstract function check_contents($contents);
     public function after_run(){
         fseek($this->handle,$this->offset);
 

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PHP=php;
+LINTTOOL=~/.lint/bin/lint.php
+is_pass=1
+echo $is_pass > /tmp/lint_is_pass.$$
+
+git st | egrep "(modified:|new file:)" | awk -F":" '{print $2}' | sed "s/[ \t]*//" | sort | uniq |  while read file_path
+do
+    check_status=1
+    is_pass=`cat /tmp/lint_is_pass.$$`
+    if [ -e ${file_path} ]; then
+        ${PHP} ${LINTTOOL} file_path="${file_path}";
+        check_status=$?
+    fi
+    if [ ${is_pass} -ne 0 ]; then
+        if [ ${check_status} -ne 0 ]; then
+            is_pass=0
+            echo $is_pass > /tmp/lint_is_pass.$$
+        fi
+    fi
+done
+
+is_pass=`cat /tmp/lint_is_pass.$$`
+
+if [ ${is_pass} -eq 0 ]; then
+    exit 1
+else
+    exit 0
+fi

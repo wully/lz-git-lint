@@ -5,18 +5,20 @@ abstract class Lint {
     protected $show = "NOTICE";
     protected $handle;
     protected $offset;
+    protected $libs_dir;
  
-    public function init($path,$no,$show,$handle,$offset){
+    public function init($path,$no,$show,$handle,$offset,$libs_dir){
         $this -> path = $path;
         $this -> no = $no;
         $this -> show = $show;
         $this -> handle = $handle;
         $this -> offset = $offset;
+        $this -> libs_dir = $libs_dir;
     }
 
     protected function print_error($info){
         if(!empty($this -> show)){
-            echo "### " . $this -> show . " ###" . "\n";
+            echo "\n### " . $this -> show . " ###" . "\n";
         }
         if(!empty($this -> path)){
             echo "path : " . $this -> path . "\n";

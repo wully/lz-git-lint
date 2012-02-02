@@ -44,6 +44,12 @@ fi
 
 mkdir -p ${prefix};
 cd ${prefix};
+if [ -e ${prefix}/conf ]; then
+    if [ -e ${prefix}/conf_bak ]; then
+        rm -rf ${prefix}/conf_bak
+    fi
+    mv ${prefix}/conf ${prefix}/conf_bak
+fi
 cp -r ${bin_dir} ./
 cp -r ${conf_dir} ./
 cp -r ${modules_dir} ./

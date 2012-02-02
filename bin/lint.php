@@ -29,13 +29,17 @@ $sysMods = array();
 foreach($preMods as $sm){
     load_mod($sm,$sysMods,$libs_dir);
 }
+
 $lint_confs = parse_lint_confs($config["config_dir"]);
 $type = get_file_type($config["file_path"]);
 if(empty($type)){
     exit($exit);
 }
-$lint_conf = $lint_confs[$type];
 
+$lint_conf = array();
+if(isset($lint_confs[$type])){
+    $lint_conf = $lint_confs[$type];
+}
 $mods = array();
 $contents = file_get_contents($config["file_path"]);
 
@@ -60,7 +64,7 @@ foreach($lint_conf as $ruler){
     $show = $ruler["show"];
     $obj = new $class();
 
-    $obj -> init($config["file_path"],"",$show,null,0);
+    $obj -> init($config["file_path"],"",$show,null,0,$libs_dir);
     $output = $obj -> check_contents($contents);
     if( $show != "NOTICE" && $exit === 0 && $output === false){
         $exit = 1;
@@ -105,7 +109,7 @@ while(!feof($handle)){
         $show = $ruler["show"];
         $obj = new $class();
 
-        $obj -> init($path,$no,$show,$handle,$offset);
+        $obj -> init($path,$no,$show,$handle,$offset,$libs_dir);
         $output = $obj -> check_row($rs,$pre_rs,$post_rs);
         if(!feof($handle)){
             $obj -> after_run();

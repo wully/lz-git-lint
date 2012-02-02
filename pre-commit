@@ -5,7 +5,7 @@ LINTTOOL=~/.lint/bin/lint.php
 is_pass=1
 echo $is_pass > /tmp/lint_is_pass.$$
 
-git st | egrep "(modified:|new file:)" | awk -F":" '{print $2}' | sed "s/[ \t]*//" | sort | uniq |  while read file_path
+git status | egrep "(modified:|new file:)" | awk -F":" '{print $2}' | sed "s/[ \t]*//" | sort | uniq |  while read file_path
 do
     check_status=1
     is_pass=`cat /tmp/lint_is_pass.$$`
